@@ -9,6 +9,7 @@ import "./index.css";
 
 function App() {
   const isLoading = useAppSelector((state) => state.matrix.loading);
+  const isError = useAppSelector((state) => state.matrix.error);
   const imageUrl = useAppSelector((state) => state.matrix.url);
   const dispatch = useAppDispatch();
 
@@ -120,11 +121,29 @@ function App() {
               alt="Keanu Reeves"
             />
           )}
-          {imageUrl.length < 1 && !isLoading && (
+          {imageUrl.length < 1 && !isLoading && !isError && (
             <div className="flex flex-col justify-center">
-              <img src="/images/empty-state.svg" alt="" className="flex self-center w-1/2" />
-              <p className="text-medium">
-              Set image size and extra options above, then click on the <strong>Get Image</strong> button
+              <img
+                src="/images/empty-state.svg"
+                alt=""
+                className="flex self-center w-1/2"
+              />
+              <p className="text-medium my-4 text-center">
+                Set image size and extra options above, then click on the{" "}
+                <strong>Get Image</strong> button
+              </p>
+            </div>
+          )}
+          {imageUrl.length < 1 && isError && (
+            <div className="flex flex-col justify-center">
+              <img
+                src="/images/error-state.svg"
+                alt=""
+                className="flex self-center w-1/2"
+              />
+              <p className="text-lg text-center my-6">
+                whoops!, we couldn't get the image from the Matrix, please try
+                again!!
               </p>
             </div>
           )}
